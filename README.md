@@ -1,6 +1,6 @@
-# Garcia-Jumpers
+# CG Event Rentals
 
-Garcia Jumpers is a React-based website built for a local business in Prosser, WA. The project showcases company information, product listings, and a responsive user interface with modern development tooling.
+CG Event Rentals is a React-based website built for a local business in Prosser, WA. The project showcases company information, product listings, and a responsive user interface with modern development tooling.
 
 ## Project description
 
