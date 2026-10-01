@@ -53,12 +53,11 @@
 .quickContactBanner {
   display: inline-flex;
   gap: 15px;
-  padding: 12px 28px;
+  padding: 14px 28px;
   background: rgba(26, 92, 46, 0.35);
   backdrop-filter: blur(12px);
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 14px 28px;
   color: #ffffff;
   font-size: 15px;
   font-weight: 400;
@@ -212,91 +211,6 @@
   transform: scale(1.03);
 }
 
-/* ═══════════ FOOTER / CONTACT ═══════════ */
-.contactFooter {
-  margin-top: 80px;
-  background: linear-gradient(135deg, #1a5c2e 0%, #2d7a45 100%);
-  padding: 60px 0 0;
-  border-radius: 20px 20px 0 0;
-  color: #ffffff;
-}
-
-.footerContent {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 30px 40px;
-}
-
-.footerInfo h2 {
-  font-size: 30px;
-  font-weight: 900;
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-
-.footerDesc {
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.7;
-  max-width: 600px;
-}
-
-.footerDivider {
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  margin: 30px 0;
-}
-
-.contactDetailsGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-}
-
-.contactItem {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.contactIcon {
-  font-size: 24px;
-  line-height: 1;
-}
-
-.contactItem strong {
-  display: block;
-  font-size: 14px;
-  color: #ffffff;
-  margin-bottom: 4px;
-}
-
-.contactItem p {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.contactItem a {
-  color: #ffffff;
-  font-weight: bold;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  transition: border-color 0.2s ease;
-}
-
-.contactItem a:hover {
-  border-color: #ffffff;
-}
-
-/* Footer bottom bar */
-.footerBottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 20px 30px;
-  text-align: center;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
 /* ── Responsive ─────────────────────────────── */
 @media (max-width: 768px) {
   .trioSection {
@@ -328,13 +242,5 @@
 
   .homeContainer .heroOverlay {
     padding: 40px 20px;
-  }
-
-  .homeCta {
-    padding: 36px 20px;
-  }
-
-  .homeCta h2 {
-    font-size: 24px;
   }
 }

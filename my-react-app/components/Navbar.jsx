@@ -1,6 +1,9 @@
 import logoImg from '../images/Logo.jpeg';
+import { uiTranslations } from '../src/productsData.js';
 
 const Navbar = ({ activeTab, setActiveTab, language, setLanguage }) => {
+  const t = uiTranslations[language] || uiTranslations['en'];
+
   // handle when the logo is clickled
   const handleLogoClick = (e) => {
     e.preventDefault();
@@ -28,13 +31,13 @@ const Navbar = ({ activeTab, setActiveTab, language, setLanguage }) => {
       setActiveTab('all');
       // Small delay to let the Home page render, then scroll
       setTimeout(() => {
-        const element = document.getElementById('contact-section');
+        const element = document.getElementById('contactSection');
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }, 100);
     } else {
-      const element = document.getElementById('contact-section');
+      const element = document.getElementById('contactSection');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -48,26 +51,20 @@ const Navbar = ({ activeTab, setActiveTab, language, setLanguage }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Quick dictionary for navbar buttons
-  const contactText = language === 'es' ? 'Contacto' : 'Contact';
-  const aboutText = language === 'es' ? 'Acerca de' : 'About';
-  const langToggleText = language === 'en' ? 'Español' : 'English';
-  const browseText = language === 'es' ? 'Explorar' : 'Browse';
-
   return (
     <div className="navBar">
       <a href="/" onClick={handleLogoClick} className="logo">
-        <img src={logoImg} alt="Garcia Jumpers Logo" className="logo-img" />
+        <img src={logoImg} alt="Garcia Jumpers Logo" className="logoImg" />
       </a>
 
-      <div className="nav-links">
+      <div className="navLinks">
         {/* Language Alternator Button */}
         <button
           onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-          className="lang-toggle-btn"
-          title={language === 'en' ? 'Cambiar a Español' : 'Switch to English'}
+          className="langToggleBtn"
+          title={t.nav_lang_title}
         >
-        {langToggleText}
+        {t.nav_lang_toggle}
         </button>
 
         {/* Browse Link */}
@@ -76,25 +73,25 @@ const Navbar = ({ activeTab, setActiveTab, language, setLanguage }) => {
           onClick={handleBrowseClick}
           className="browseLink"
         >
-        {browseText}
+        {t.nav_browse}
         </a>
 
         {/* About Link */}
         <a
           href="#about"
           onClick={handleAboutClick}
-          className={`nav-link-btn ${activeTab === 'about' ? 'active' : ''}`}
+          className={`navLinkBtn ${activeTab === 'about' ? 'active' : ''}`}
         >
-        {aboutText}
+        {t.nav_about}
         </a>
 
         {/* Contact Scroll Button */}
         <a
           href="#contact"
           onClick={handleContactClick}
-          className="contact-nav-btn"
+          className="contactNavBtn"
         >
-          {contactText}
+          {t.nav_contact}
         </a>
       </div>
     </div>

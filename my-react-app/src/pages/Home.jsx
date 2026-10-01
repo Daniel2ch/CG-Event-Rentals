@@ -4,7 +4,7 @@ import { contactInfo, uiTranslations } from '../productsData.js';
 import './Home.css';
 
 const Home = ({ language, setActiveTab }) => {
-  const t = uiTranslations[language];
+  const t = uiTranslations[language] || uiTranslations['en'];
 
   const handleBrowseClick = () => {
     if (setActiveTab) {
@@ -26,13 +26,13 @@ const Home = ({ language, setActiveTab }) => {
           </div>
         </div>
       </header>
-
+      {/*
       <section className="trioSection">
         <div className="trioCard" onClick={handleBrowseClick}>
           <div className="trioCardImgWrap">
             <img src="../images/Jumper6.jpeg" alt="Jumpers" />
             <div className="trioCardLabel">
-              <h3>{t.jumpers_title || 'Jumpers'}</h3>
+              <h3>{t.jumpers_title}</h3>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@ const Home = ({ language, setActiveTab }) => {
           <div className="trioCardImgWrap">
             <img src="../images/tent8.jpeg" alt="Tents, Chairs & Tables" />
             <div className="trioCardLabel">
-              <h3>{t.tentsChairsTables || 'Tents, Chairs & Tables'}</h3>
+              <h3>{t.tentsChairsTables}</h3>
             </div>
           </div>
         </div>
@@ -48,12 +48,12 @@ const Home = ({ language, setActiveTab }) => {
           <div className="trioCardImgWrap">
             <img src="../images/decorations19.jpeg" alt="Decorations" />
             <div className="trioCardLabel">
-              <h3>{t.decorations || 'Decorations'}</h3>
+              <h3>{t.decorations}</h3>
             </div>
           </div>
         </div>
       </section>
-
+*/}
       {/* ── Feature Section 1: Jumpers ── */}
       <section className="featureSection">
         <div className="featureText">
@@ -103,7 +103,7 @@ const Home = ({ language, setActiveTab }) => {
       </section>
 
 {/* Footer / Contact Section — No booking form, just contact info */}
-      <footer id="contact-section" className="contactFooter">
+      <footer id="contactSection" className="contactFooter">
         <div className="footerContent">
 
           {/* Business details */}

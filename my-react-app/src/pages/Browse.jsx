@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { products, categories, contactInfo, uiTranslations } from '../productsData.js';
+import { Phone, Mail, Clock, MapPin } from "lucide-react";
 import ProductModal from '../../components/ProductModal.jsx';
 import './Browse.css';
 
-// This Home function is what holds the content of the home page
-// Links back to "<Home />" in App.jsx
 const Browse = ({ activeTab, setActiveTab, language }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -18,7 +17,7 @@ const Browse = ({ activeTab, setActiveTab, language }) => {
   const handleTabChange = (categoryId) => {
     setActiveTab(categoryId);
     // Scroll down to products grid when tab is changed
-    const element = document.getElementById('products-section');
+    const element = document.getElementById('productsSection');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -46,40 +45,49 @@ const Browse = ({ activeTab, setActiveTab, language }) => {
   });
 
   return (
-    <div className="home-container">
+    <div className="browseContainer">
 
       {/* Main Catalog Section */}
-      <main id="products-section" className="catalog-section">
-        <h2 className="section-title">{t.explore_title}</h2>
+      <main id="productsSection" className="catalogSection">
+        <h2 className="sectionTitle">{t.explore_title}</h2>
 
         {/* Search and Filter Row */}
-        <div className="catalog-controls">
+        <div className="catalogControls">
           {/* Search bar */}
-          <div className="search-box">
-            <svg className="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="searchBox">
+            {/* svg draws the search bar icon and path is instructions of drawing lines*/}
+            <svg className="searchIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
+            {/* text input field for search bar */}
             <input
               type="text"
               placeholder={t.search_placeholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
+              className="searchInput"
             />
+            {/* The && operator is used for conditional rendering in JavaScript */}
+            {/* If the left of && is true, then the right will be displayed. If the left is false, then the left is displayed and right isn't */}
+            {/* &times is the multiplication sign but in HTML it is displayed as a close button */}
             {searchQuery && (
-              <button className="clear-search-btn" onClick={() => setSearchQuery('')}>&times;</button>
+              <button className="clearSearchBtn" onClick={() => setSearchQuery('')}>&times;</button>
             )}
           </div>
 
-          {/* Category Tabs inside Home page */}
-          <div className="category-tabs">
+          {/* Category Tabs inside Browse page */}
+          {/* Tabs in browse are created here and managed when clicked */}
+          {/* .map goes through all of the items in categories.length and needs to return something */}
+          <div className="categoryTabs">
             {categories.map((cat) => {
               const catTitle = language === 'es' ? cat.titleEs : cat.title;
               return (
+                // key is needed for .map to identify each item
                 <button
                   key={cat.id}
                   onClick={() => handleTabChange(cat.id)}
-                  className={`tab-btn ${activeTab === cat.id ? 'active-tab' : ''}`}
+                  // If the active tab is the same as the category id, then the activeTab class is applied
+                  className={`tabBtn ${activeTab === cat.id ? 'activeTab' : ''}`}
                 >
                   {catTitle}
                 </button>
@@ -89,57 +97,44 @@ const Browse = ({ activeTab, setActiveTab, language }) => {
         </div>
 
         {/* Product Cards Grid */}
+        {/* Filtering through products and gather the information needed for each card. This does not create them yet */}
         {filteredProducts.length > 0 ? (
-          <div className="products-grid">
+          <div className="productsGrid">
             {filteredProducts.map((product) => {
               const mainImage = product.images && product.images[0]
                 ? product.images[0]
-                : 'https://placehold.co/400x300?text=No+Image';
+                : `https://placehold.co/400x300?text=${encodeURIComponent(t.no_image_text)}`;
 
               const productName = language === 'es' ? product.nameEs : product.name;
               const productPrice = language === 'es' ? product.priceEs : product.price;
               const productPriceLabel = language === 'es' ? product.priceLabelEs : product.priceLabel;
               const productShortDesc = language === 'es' ? product.shortDescEs : product.shortDesc;
 
+              const catObj = categories.find(c => c.id === product.category);
+              const categoryLabel = catObj ? (language === 'es' ? catObj.titleEs : catObj.title) : product.category;
+
               return (
-                <div key={product.id} className="product-card">
+                <div key={product.id} className="productCard">
                   {/* Photo Container with instructions */}
-                  <div className="product-image-container" onClick={() => setSelectedProduct(product)}>
-                    <img src={mainImage} alt={productName} className="product-card-img" />
-
-                    {/* Floating Info Overlay for multiple photos */}
-                    {product.images && product.images.length > 1 && (
-                      <span className="multiple-photos-badge">
-                        📸 {product.images.length} {t.multiple_photos_badge}
-                      </span>
-                    )}
-
-                    <div className="img-hover-overlay">
-                      <span>{t.click_for_photos}</span>
-                    </div>
+                  <div className="productImageContainer" onClick={() => setSelectedProduct(product)}>
+                    <img src={mainImage} alt={productName} className="productCardImg" />
                   </div>
 
                   {/* Card Content */}
-                  <div className="product-card-body">
-                    <span className="product-card-category">{product.category}</span>
-                    <h3 className="product-card-title">{productName}</h3>
+                  <div className="productCardBody">
+                    <span className="productCardCategory">{categoryLabel}</span>
+                    <h3 className="productCardTitle">{productName}</h3>
 
                     {/* Price Placeholder Box */}
-                    <div className="price-tag-container">
-                      <span className="price-tag">{productPrice}</span>
-                      <span className="price-hint">{t.price_placeholder_label}</span>
+                    <div className="priceTagContainer">
+                      <span className="priceTag">{productPrice}</span>
                     </div>
 
-                    <p className="product-card-desc">{productShortDesc}</p>
-
-                    {/* Customize Instruction for Developer */}
-                    <div className="card-customization-notice">
-                      🔧 ID: <code>{product.id}</code> in productsData.js
-                    </div>
+                    <p className="productCardDesc">{productShortDesc}</p>
 
                     {/* View Details CTA Button */}
                     <button
-                      className="card-details-btn"
+                      className="cardDetailsBtn"
                       onClick={() => setSelectedProduct(product)}
                     >
                       {t.btn_view_details}
@@ -150,9 +145,9 @@ const Browse = ({ activeTab, setActiveTab, language }) => {
             })}
           </div>
         ) : (
-          <div className="no-results-box">
+          <div className="noResultsBox">
             <p>{t.no_results} "{searchQuery}"</p>
-            <button className="clear-filters-btn" onClick={() => { setSearchQuery(''); setActiveTab('all'); }}>
+            <button className="clearFiltersBtn" onClick={() => { setSearchQuery(''); setActiveTab('all'); }}>
               {t.btn_reset_filters}
             </button>
           </div>
@@ -160,47 +155,42 @@ const Browse = ({ activeTab, setActiveTab, language }) => {
       </main>
 
       {/* Footer / Contact Section — No booking form, just contact info */}
-      <footer id="contact-section" className="contact-footer">
-        <div className="footer-content">
+      <footer id="contactSection" className="contactFooter">
+        <div className="footerContent">
 
           {/* Business details */}
-          <div className="footer-info">
-            <h2>Garcia Jumpers</h2>
-            <p className="footer-desc">{t.footer_tagline}</p>
-
-            <hr className="footer-divider" />
-
-            <div className="contact-details-grid">
+          <div className="footerInfo">
+            <h2>CG Event Rentals</h2>
+            <p className="footerDesc">{t.footer_tagline}</p>
+            <hr className="footerDivider" />
+            <div className="contactDetailsGrid">
               {/* Phone */}
-              <div className="contact-item">
-                <span className="contact-icon">📞</span>
+              <div className="contactItem">
+                <span className="contactIcon"><Phone /></span>
                 <div>
                   <strong>{t.footer_phone_title}</strong>
                   <p><a href={`tel:${contactInfo.phone}`}>{contactInfo.phone}</a></p>
                 </div>
               </div>
-
               {/* Email */}
-              <div className="contact-item">
-                <span className="contact-icon">✉️</span>
+              <div className="contactItem">
+                <span className="contactIcon"><Mail /></span>
                 <div>
                   <strong>{t.footer_email_title}</strong>
                   <p><a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a></p>
                 </div>
               </div>
-
               {/* Hours */}
-              <div className="contact-item">
-                <span className="contact-icon">🕒</span>
+              <div className="contactItem">
+                <span className="contactIcon"><Clock /></span>
                 <div>
                   <strong>{t.footer_hours_title}</strong>
                   <p>{language === 'es' ? contactInfo.workingHoursEs : contactInfo.workingHours}</p>
                 </div>
               </div>
-
               {/* Service Areas */}
-              <div className="contact-item">
-                <span className="contact-icon">📍</span>
+              <div className="contactItem">
+                <span className="contactIcon"><MapPin /></span>
                 <div>
                   <strong>{t.footer_area_title}</strong>
                   <p>{language === 'es' ? contactInfo.serviceAreasEs : contactInfo.serviceAreas}</p>
@@ -208,12 +198,10 @@ const Browse = ({ activeTab, setActiveTab, language }) => {
               </div>
             </div>
           </div>
-
         </div>
-
         {/* Bottom copyright banner */}
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Garcia Jumpers. {t.all_rights}</p>
+        <div className="footerBottom">
+          <p>&copy; {new Date().getFullYear()} CG Event Rentals. {t.all_rights}</p>
         </div>
       </footer>
 
